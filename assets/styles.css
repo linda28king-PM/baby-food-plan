@@ -45,25 +45,13 @@ body {
 
 /* ============ 页眉 ============ */
 .app-header {
-  text-align: center;
-  padding: 20px 16px 24px;
-  margin-bottom: 16px;
+  margin: -16px -14px 16px;
+  overflow: hidden;
 }
-.app-header .icon {
-  font-size: 36px;
+.banner-img {
   display: block;
-  margin-bottom: 8px;
-  opacity: 0.9;
-}
-.app-header h1 {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
-}
-.app-header .subtitle {
-  font-size: 13px;
-  color: var(--text-soft);
+  width: 100%;
+  height: auto;
 }
 
 /* ============ 宝宝信息条（顶部固定/置顶） ============ */
