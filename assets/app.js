@@ -14,20 +14,36 @@ let savedLocalState = null; // 仅查看模式下，保存原本地数据用于�
 function $(sel, root = document) { return root.querySelector(sel); }
 function $$(sel, root = document) { return Array.from(root.querySelectorAll(sel)); }
 
-async function openXHSSearch(keyword) {
-  const searchWord = '宝宝辅食 ' + keyword;
-  // 微信屏蔽 URI scheme，直接复制搜索词是最可靠的方式
+function isWeChatBrowser() {
+  return /MicroMessenger/i.test(navigator.userAgent);
+}
+
+async function copyText(text) {
   try {
-    await navigator.clipboard.writeText(searchWord);
+    await navigator.clipboard.writeText(text);
   } catch (e) {
     const ta = document.createElement('textarea');
-    ta.value = searchWord;
+    ta.value = text;
     document.body.appendChild(ta);
     ta.select();
     document.execCommand('copy');
     document.body.removeChild(ta);
   }
-  toast('已复制「' + keyword + '」，打开小红书粘贴搜索 🔍');
+}
+
+async function openXHSSearch(keyword) {
+  const searchWord = '宝宝辅食 ' + keyword;
+  if (isWeChatBrowser()) {
+    // 微信内：复制搜索词，引导去微信搜索栏搜索
+    await copyText(searchWord);
+    toast('已复制，去微信顶部搜索栏粘贴搜索 🔍');
+  } else {
+    // 普通浏览器：直接跳小红书搜索
+    window.open(
+      'https://www.xiaohongshu.com/search_result?keyword=' + encodeURIComponent(searchWord),
+      '_blank'
+    );
+  }
 }
 
 function mealLink(text) {
