@@ -14,14 +14,44 @@ let savedLocalState = null; // 仅查看模式下，保存原本地数据用于�
 function $(sel, root = document) { return root.querySelector(sel); }
 function $$(sel, root = document) { return Array.from(root.querySelectorAll(sel)); }
 
-function xhsSearchURL(keyword) {
-  return 'https://www.xiaohongshu.com/search_result?keyword=' + encodeURIComponent('宝宝辅食 ' + keyword);
+function openXHSSearch(keyword) {
+  const searchWord = '宝宝辅食 ' + keyword;
+  // 尝试唤起小红书 App（URI scheme）
+  const appScheme = 'xhsdiscover://search/result?keyword=' + encodeURIComponent(searchWord);
+  const webURL = 'https://www.xiaohongshu.com/search_result?keyword=' + encodeURIComponent(searchWord);
+
+  const html = `
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title">小红书搜食谱</span>
+      <button class="modal-close" data-close>关闭</button>
+    </div>
+    <div class="xhs-modal-keyword">${escapeHtml(searchWord)}</div>
+    <p class="xhs-modal-tip">有小红书 App 点下方按钮直接跳转，没有可复制搜索词手动搜。</p>
+    <a class="btn btn-primary btn-block xhs-app-btn" href="${appScheme}">打开小红书 App 搜索</a>
+    <button class="btn btn-secondary btn-block" id="xhs-copy-btn" style="margin-top:8px;">复制搜索词</button>
+  `;
+  openModal(html, () => {
+    $('#xhs-copy-btn').onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(searchWord);
+      } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = searchWord;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      toast('已复制，去小红书粘贴搜索 ✓');
+      closeModal();
+    };
+  });
 }
 
 function mealLink(text) {
   if (!text) return '';
-  const url = xhsSearchURL(text);
-  return `<a class="meal-xhs-link" href="${url}" target="_blank" rel="noopener" title="在小红书搜索做法">${escapeHtml(text)}<span class="xhs-icon">小红书</span></a>`;
+  return `<span class="meal-xhs-link" data-action="xhs-search" data-keyword="${escapeHtml(text)}">${escapeHtml(text)}<span class="xhs-icon">小红书</span></span>`;
 }
 
 function escapeHtml(s) {
@@ -511,7 +541,9 @@ function handleMainClick(e) {
   if (!target) return;
   const action = target.dataset.action;
 
-  if (action === 'toggle-food') {
+  if (action === 'xhs-search') {
+    openXHSSearch(target.dataset.keyword);
+  } else if (action === 'toggle-food') {
     toggleFood(target.dataset.food);
   } else if (action === 'add-observation') {
     openObservationForm();
