@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#fdfcfa">
+<title>宝宝辅食计划 · 6-12 月龄</title>
+<meta name="description" content="为 6-12 月龄宝宝量身定制的辅食计划，按月龄、按周、按日筛选食谱，并管理已尝试食材和过敏观察。">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<!-- 页眉 -->
+<div class="app-header">
+  <span class="icon">🌾</span>
+  <h1>宝宝辅食计划</h1>
+  <div class="subtitle">6-12 月龄营养搭配指南</div>
+</div>
+
+<!-- 顶部宝宝信息条（点击编辑） -->
+<div class="baby-bar empty" id="baby-bar"></div>
+
+<!-- Tab 导航 -->
+<div class="tabs" id="tabs"></div>
+
+<!-- 主区域 -->
+<div id="main"></div>
+
+<!-- 页脚 -->
+<div class="footer">
+  <p>本计划综合参考《中国居民膳食指南（2022）》、世界卫生组织建议</p>
+  <p>及国家卫健委《婴幼儿营养喂养评估服务指南》整理</p>
+  <p style="margin-top:10px;">实际请根据宝宝的胃口、体重、过敏情况调整 <span class="heart">♡</span></p>
+  <p style="margin-top:14px;"><a href="https://github.com" style="color:var(--text-mute);" target="_blank" rel="noopener">在 GitHub 查看源码</a></p>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<!-- 数据 + 应用 -->
+<script src="data/foods.js"></script>
+<script src="assets/storage.js"></script>
+<script src="assets/app.js"></script>
+
+</body>
+</html>
