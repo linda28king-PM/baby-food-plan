@@ -32,17 +32,15 @@ async function copyText(text) {
 }
 
 async function openXHSSearch(keyword) {
-  const searchWord = '宝宝辅食 ' + keyword;
+  const searchWord = '小红书 宝宝辅食 ' + keyword;
   if (isWeChatBrowser()) {
-    // 同时复制 + 尝试跳微信搜索（部分版本支持，失败时可直接粘贴）
+    // 微信内：复制搜索词，引导去微信搜索栏粘贴
     await copyText(searchWord);
-    window.location.href = 'weixin://dl/search?query=' + encodeURIComponent(searchWord);
-    // 若跳转失败页面仍在，toast 提示兜底
-    setTimeout(() => toast('已复制，去微信搜索栏粘贴搜索 🔍'), 400);
+    toast('已复制，去微信搜索栏粘贴搜索 🔍');
   } else {
-    // 普通浏览器：直接跳小红书搜索
+    // 普通浏览器：百度搜索，结果里小红书帖子排首位且无需登录
     window.open(
-      'https://www.xiaohongshu.com/search_result?keyword=' + encodeURIComponent(searchWord),
+      'https://www.baidu.com/s?wd=' + encodeURIComponent(searchWord),
       '_blank'
     );
   }
@@ -50,7 +48,7 @@ async function openXHSSearch(keyword) {
 
 function mealLink(text) {
   if (!text) return '';
-  return `<span class="meal-xhs-link" data-action="xhs-search" data-keyword="${escapeHtml(text)}">${escapeHtml(text)}<span class="xhs-icon">小红书</span></span>`;
+  return `<span class="meal-xhs-link" data-action="xhs-search" data-keyword="${escapeHtml(text)}">${escapeHtml(text)}<span class="xhs-icon">查看</span></span>`;
 }
 
 function escapeHtml(s) {
