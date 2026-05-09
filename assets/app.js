@@ -32,13 +32,14 @@ async function copyText(text) {
 }
 
 async function openXHSSearch(keyword) {
-  const searchWord = '小红书 宝宝辅食 ' + keyword;
   if (isWeChatBrowser()) {
-    // 微信内：复制搜索词，引导去微信搜索栏粘贴
+    // 微信内：复制食谱名，去微信搜索栏搜辅食教程
+    const searchWord = '宝宝辅食 ' + keyword;
     await copyText(searchWord);
     toast('已复制，去微信搜索栏粘贴搜索 🔍');
   } else {
-    // 普通浏览器：百度搜索，结果里小红书帖子排首位且无需登录
+    // 普通浏览器：百度搜小红书帖子
+    const searchWord = '小红书 宝宝辅食 ' + keyword;
     window.open(
       'https://www.baidu.com/s?wd=' + encodeURIComponent(searchWord),
       '_blank'
