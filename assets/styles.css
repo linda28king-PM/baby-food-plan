@@ -838,3 +838,26 @@ body {
   .app-header h1 { font-size: 26px; }
   .app-header .icon { font-size: 42px; }
 }
+
+/* ============ 小红书食谱链接 ============ */
+.meal-xhs-link {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.meal-xhs-link:active { opacity: 0.7; }
+.xhs-icon {
+  display: inline-block;
+  font-size: 10px;
+  color: #ff2442;
+  background: #fff0f2;
+  border: 1px solid #ffccd3;
+  border-radius: 4px;
+  padding: 1px 5px;
+  line-height: 1.5;
+  white-space: nowrap;
+  flex-shrink: 0;
+}

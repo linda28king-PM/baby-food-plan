@@ -14,6 +14,16 @@ let savedLocalState = null; // 仅查看模式下，保存原本地数据用于�
 function $(sel, root = document) { return root.querySelector(sel); }
 function $$(sel, root = document) { return Array.from(root.querySelectorAll(sel)); }
 
+function xhsSearchURL(keyword) {
+  return 'https://www.xiaohongshu.com/search_result?keyword=' + encodeURIComponent('宝宝辅食 ' + keyword);
+}
+
+function mealLink(text) {
+  if (!text) return '';
+  const url = xhsSearchURL(text);
+  return `<a class="meal-xhs-link" href="${url}" target="_blank" rel="noopener" title="在小红书搜索做法">${escapeHtml(text)}<span class="xhs-icon">小红书</span></a>`;
+}
+
 function escapeHtml(s) {
   if (s == null) return '';
   return String(s)
@@ -260,9 +270,9 @@ function renderPlan() {
         ${(selectedDay === 'all' ? menu : menu.filter(m => m.day === selectedDay)).map(m => `
           <div class="menu-day-card">
             <div class="day-label">${escapeHtml(m.day)}</div>
-            ${m.breakfast ? `<div class="menu-meal"><span class="meal-label">早</span><span class="meal-content">${escapeHtml(m.breakfast)}</span></div>` : ''}
-            ${m.lunch ? `<div class="menu-meal"><span class="meal-label">午</span><span class="meal-content">${escapeHtml(m.lunch)}</span></div>` : ''}
-            ${m.dinner ? `<div class="menu-meal"><span class="meal-label">晚/加餐</span><span class="meal-content">${escapeHtml(m.dinner)}</span></div>` : ''}
+            ${m.breakfast ? `<div class="menu-meal"><span class="meal-label">早</span><span class="meal-content">${mealLink(m.breakfast)}</span></div>` : ''}
+            ${m.lunch ? `<div class="menu-meal"><span class="meal-label">午</span><span class="meal-content">${mealLink(m.lunch)}</span></div>` : ''}
+            ${m.dinner ? `<div class="menu-meal"><span class="meal-label">晚/加餐</span><span class="meal-content">${mealLink(m.dinner)}</span></div>` : ''}
           </div>
         `).join('')}
       </div>
