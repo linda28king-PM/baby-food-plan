@@ -822,9 +822,9 @@ body {
   .info-grid { grid-template-columns: repeat(4, 1fr); }
   .schedule-row { grid-template-columns: 110px 1fr; }
   .week-grid { grid-template-columns: repeat(2, 1fr); }
-  .app-header { padding: 28px 16px 28px; }
-  .app-header h1 { font-size: 26px; }
-  .app-header .icon { font-size: 42px; }
+  /* 修正桌面版 header 负 margin（抵消 body 28px/24px padding） */
+  .app-header { margin: -28px -24px 16px; }
+  .banner-img { max-height: 300px; object-fit: cover; object-position: center top; }
 }
 
 /* ============ 小红书食谱链接 ============ */
