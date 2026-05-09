@@ -14,39 +14,20 @@ let savedLocalState = null; // 仅查看模式下，保存原本地数据用于�
 function $(sel, root = document) { return root.querySelector(sel); }
 function $$(sel, root = document) { return Array.from(root.querySelectorAll(sel)); }
 
-function openXHSSearch(keyword) {
+async function openXHSSearch(keyword) {
   const searchWord = '宝宝辅食 ' + keyword;
-  // 尝试唤起小红书 App（URI scheme）
-  const appScheme = 'xhsdiscover://search/result?keyword=' + encodeURIComponent(searchWord);
-  const webURL = 'https://www.xiaohongshu.com/search_result?keyword=' + encodeURIComponent(searchWord);
-
-  const html = `
-    <div class="modal-handle"></div>
-    <div class="modal-header">
-      <span class="modal-title">小红书搜食谱</span>
-      <button class="modal-close" data-close>关闭</button>
-    </div>
-    <div class="xhs-modal-keyword">${escapeHtml(searchWord)}</div>
-    <p class="xhs-modal-tip">有小红书 App 点下方按钮直接跳转，没有可复制搜索词手动搜。</p>
-    <a class="btn btn-primary btn-block xhs-app-btn" href="${appScheme}">打开小红书 App 搜索</a>
-    <button class="btn btn-secondary btn-block" id="xhs-copy-btn" style="margin-top:8px;">复制搜索词</button>
-  `;
-  openModal(html, () => {
-    $('#xhs-copy-btn').onclick = async () => {
-      try {
-        await navigator.clipboard.writeText(searchWord);
-      } catch (e) {
-        const ta = document.createElement('textarea');
-        ta.value = searchWord;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-      }
-      toast('已复制，去小红书粘贴搜索 ✓');
-      closeModal();
-    };
-  });
+  // 微信屏蔽 URI scheme，直接复制搜索词是最可靠的方式
+  try {
+    await navigator.clipboard.writeText(searchWord);
+  } catch (e) {
+    const ta = document.createElement('textarea');
+    ta.value = searchWord;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  }
+  toast('已复制「' + keyword + '」，打开小红书粘贴搜索 🔍');
 }
 
 function mealLink(text) {

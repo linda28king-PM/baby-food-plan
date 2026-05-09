@@ -848,24 +848,3 @@ body {
   white-space: nowrap;
   flex-shrink: 0;
 }
-.xhs-modal-keyword {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--text);
-  background: var(--soft);
-  border-radius: var(--radius-sm);
-  padding: 12px 16px;
-  margin-bottom: 12px;
-  text-align: center;
-}
-.xhs-modal-tip {
-  font-size: 13px;
-  color: var(--text-soft);
-  margin-bottom: 16px;
-  line-height: 1.6;
-}
-.xhs-app-btn {
-  display: block;
-  text-align: center;
-  text-decoration: none;
-}
