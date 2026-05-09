@@ -34,9 +34,11 @@ async function copyText(text) {
 async function openXHSSearch(keyword) {
   const searchWord = '宝宝辅食 ' + keyword;
   if (isWeChatBrowser()) {
-    // 微信内：复制搜索词，引导去微信搜索栏搜索
+    // 同时复制 + 尝试跳微信搜索（部分版本支持，失败时可直接粘贴）
     await copyText(searchWord);
-    toast('已复制，去微信顶部搜索栏粘贴搜索 🔍');
+    window.location.href = 'weixin://dl/search?query=' + encodeURIComponent(searchWord);
+    // 若跳转失败页面仍在，toast 提示兜底
+    setTimeout(() => toast('已复制，去微信搜索栏粘贴搜索 🔍'), 400);
   } else {
     // 普通浏览器：直接跳小红书搜索
     window.open(
