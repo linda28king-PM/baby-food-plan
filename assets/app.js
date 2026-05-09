@@ -121,6 +121,10 @@ function render() {
   renderBabyBar();
   renderTabs();
   renderMain();
+  // 动态更新页面标题（影响微信内分享卡片标题）
+  document.title = state.baby?.name
+    ? `【${state.baby.name}】的辅食计划 · 参考`
+    : '宝宝辅食计划 · 6-12 月龄';
 }
 
 // ---------- 顶部宝宝信息条 ----------
